@@ -2,6 +2,6 @@
 	"name" : "muggezifter-khl4map",
 	"version": "0.0.1",
 	"scripts": {
-    	"postinall": "echo \"postinstall\"
+    	"postinall": "echo \"postinstall\""
   	},
 }
