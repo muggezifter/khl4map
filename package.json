@@ -11,6 +11,8 @@
     "postinstall": "node ./install.js",
     "start": "node ./bin/www"
   },
+  ,
+  "files": ["dist","install.js"],
   "devDependencies": {
     "express": "^4.14.0",
     "gulp": "^3.9.1",
