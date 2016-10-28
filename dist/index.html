@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>khl4grid</title>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcRAKfaz6Hgg35AbuLE42SIvYoTUYaCgs">
+    </script>
+    <script src="/js/jquery-2.2.0.min.js"></script>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="controls">
+	    <select id="grid_select">
+	        <option val="0">choose a grid...</option>
+	    </select>
+	    <select id="play_select">
+	        <option val="pause">pause</option>
+	        <option val="live">live</option>
+	    </select>
+	    <div id="acc">
+	        <label><input type="checkbox"> fast</label>
+	    </div>
+	    <div id="display"></div>
+	</div>
+	<div  id="map_canvas"></div>
+	<script type="text/javascript" src="/js/map.js"></script>
+	<script type="text/javascript" src="/js/front.js"></script>
+</body>
+</html>
