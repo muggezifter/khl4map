@@ -15,16 +15,21 @@ function copyFile(source, target) {
         rd.pipe(wr);
     });
 }
-
-copyFile('./dist/index.html','../../public/index.html');
-console.log('copied index.html');
-copyFile('./dist/css/style.css','../../public/css/style.css');
-console.log('copied css/style.css');
-copyFile('./dist/css/style.css','../../public/css/style.css.map');
-console.log('copied css/style.css.map');
-copyFile('./dist/js/jquery-2.2.0.min.js','../../public/js/jquery-2.2.0.min.js');
-console.log('copied js/jquery-2.2.0.min.js');
-copyFile('./dist/js/map.js','../../public/js/map.js');
-console.log('copied js/map.js');
-copyFile('./dist/js/front.js','../../public/js/front.js');
-console.log('copied js/front.js');
+fs.exists('../../public', (exists) => {
+    if (exists) {
+        copyFile('./dist/index.html','../../public/index.html');
+        console.log('copied index.html');
+        copyFile('./dist/css/style.css','../../public/css/style.css');
+        console.log('copied css/style.css');
+        copyFile('./dist/css/style.css','../../public/css/style.css.map');
+        console.log('copied css/style.css.map');
+        copyFile('./dist/js/jquery-2.2.0.min.js','../../public/js/jquery-2.2.0.min.js');
+        console.log('copied js/jquery-2.2.0.min.js');
+        copyFile('./dist/js/map.js','../../public/js/map.js');
+        console.log('copied js/map.js');
+        copyFile('./dist/js/front.js','../../public/js/front.js');
+        console.log('copied js/front.js');
+    } else {
+        console.log("no public directory found");
+    }
+});
