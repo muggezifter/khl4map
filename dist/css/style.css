@@ -9,10 +9,13 @@ body {
 
 #map_canvas {
   clear: both;
-  border: 2px solid #fff;
-  border-radius: 15px;
   margin-top: 20px;
-  height: 700px; }
+  height: 700px;
+  border: 2px solid white;
+  border-radius: 15px; }
+  #map_canvas div .gm-style {
+    border: 0px solid white;
+    border-radius: 13px; }
 
 #display {
   font-family: arial, helvetica, sans-serif;

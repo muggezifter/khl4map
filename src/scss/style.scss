@@ -15,10 +15,16 @@ body {
 
 #map_canvas {
     clear: both;
-    border: 2px solid $maincolor;
-    border-radius: 15px;
     margin-top: 20px;
     height: 700px;
+    border: 2px solid white;
+    border-radius: 15px;
+    div {
+        .gm-style {
+            border: 0px solid white;
+            border-radius: 13px;
+        }
+    }
 }
 
 #display{
