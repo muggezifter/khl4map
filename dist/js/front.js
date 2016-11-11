@@ -20,10 +20,12 @@
             if (playIntervalId) {
                 clearInterval(playIntervalId);
             }
-            // console.log(currentTrack);
             var index = 0;
             if (currentTrack.length > 2) {
-                interval = (currentTrack[currentTrack.length - 1].timestamp - currentTrack[0].timestamp) / currentTrack.length;
+                //interval = (currentTrack[currentTrack.length - 1].timestamp - currentTrack[0].timestamp) / currentTrack.length;
+                var start = new Date(currentTrack[0].date);
+                var end = new Date(currentTrack[currentTrack.length - 1].date);
+                //interval = (end - start);
                 playNode(currentTrack[0])
                 playIntervalId = setInterval(function () {
                     if (currentTrack[++index]) {
@@ -37,14 +39,16 @@
                         });
                     }
 
-                }, speedfactor * interval);
+                }, 
+                speedfactor * interval);
             }
         }, 1000);
     }
 
     var displayInfo = function (node) {
         $("#display").text(
-            formatDate(node.timestamp) + " lon:" + parseFloat(node.lon).toPrecision(8) + " lat:" + parseFloat(node.lat).toPrecision(9)
+            //formatDate(node.timestamp) + 
+            formatDate(node.date) +" lon:" + parseFloat(node.lon).toPrecision(8) + " lat:" + parseFloat(node.lat).toPrecision(9)
         );
     }
 
@@ -60,17 +64,23 @@
         }
     }
 
-    var formatDate = function (timestamp) {
-        var a = new Date(timestamp * 1000);
+    var formatDate = function (date) {
+        var t = new Date(date);
         var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-        var year = a.getFullYear();
-        var month = months[a.getMonth()];
-        var date = a.getDate();
-        var hour = (a.getHours() + "0").substr(0, 2);
-        var min = (a.getMinutes() + "0").substr(0, 2);
-        var sec = (a.getSeconds() + "0").substr(0, 2);
+        var year = t.getFullYear();
+        var month = months[t.getMonth()];
+        var date = t.getDate();
+        var hour = pad(t.getHours());
+        var min = pad(t.getMinutes());
+        var sec = pad(t.getSeconds());
         var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
         return time;
+    }
+
+    var pad = function (n) {
+
+        if  (n<10) return "0" + n;
+        return n;
     }
 
     var playSelectChangeHandler = function (id) {
@@ -95,7 +105,7 @@
                 break;
             default:
                 $.getJSON("/recording/find?rec_id=" + id + "&callback=?").done(function (data) {
-                    currentTrack = data[0].nodes;
+                    currentTrack = data;
                     play(currentTrack);
                 });
                 break;
@@ -107,13 +117,14 @@
         $.getJSON("/grid/find?grid_id=" + id + "&callback=?").done(function (data) {
            currentGrid = data[0];
            logInConsole && console.log(currentGrid);
+           populatePlaySelect(id);
            khl4map.initializeMaps(currentGrid);
         });
     }
 
 
-    var populatePlaySelect = function () {
-        $.getJSON("/recording/list?callback=?").done(function (data) {
+    var populatePlaySelect = function (grid_id) {
+        $.getJSON("/recording/list?grid_id=" + grid_id + "&callback=?").done(function (data) {
             addOptions("select#play_select",data,"description", "recording_id");
         });
     };
@@ -125,10 +136,13 @@
     };
 
     var addOptions = function(select,data,name,value) {
+        $(select)
+            .children(".dynamic")
+            .remove();
         var i = data.length;
         while (data[--i]) {
             $(select)
-                .append($('<option>', { value: data[i][value] })
+                .append($('<option>', { class: "dynamic", value: data[i][value] })
                     .text((data[i][name])
                         ? (data[i][name])
                         : data[i][value]));
@@ -151,9 +165,6 @@
             gridsSelectChangeHandler(event.target.value)
         });
 
-
     populateGridsSelect();
-    populatePlaySelect();
-
 })();
 
