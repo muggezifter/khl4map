@@ -86,21 +86,11 @@
     var playSelectChangeHandler = function (id) {
         switch (id) {
             case "pause":
-                $.getJSON("/play?callback=?").done(function (data) {
-                    logInConsole && console.log(data);
-                });
-                if (playIntervalId) {
-                    clearInterval(playIntervalId);
-                }
+                stopPlaying();
                 logInConsole && console.log("pause");
                 break;
             case "live":
-                $.getJSON("/play?callback=?").done(function (data) {
-                    logInConsole &&console.log(data);
-                });
-                if (playIntervalId) {
-                    clearInterval(playIntervalId);
-                }
+                stopPlaying();
                 logInConsole && console.log("live");
                 break;
             default:
@@ -110,10 +100,19 @@
                 });
                 break;
         }
+    };
 
+    var stopPlaying = function () {
+        $.getJSON("/play?callback=?").done(function (data) {
+            logInConsole && console.log(data);
+        });
+        if (playIntervalId) {
+            clearInterval(playIntervalId);
+        }
     };
 
     var gridsSelectChangeHandler = function (id) {
+        stopPlaying();
         $.getJSON("/grid/find?grid_id=" + id + "&callback=?").done(function (data) {
            currentGrid = data[0];
            logInConsole && console.log(currentGrid);
