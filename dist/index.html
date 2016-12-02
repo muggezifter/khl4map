@@ -8,23 +8,35 @@
     </script>
     <script src="/js/jquery-2.2.0.min.js"></script>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<div id="controls">
-	    <select id="grid_select">
-	        <option val="0">choose a grid...</option>
-	    </select>
-	    <select id="play_select">
-	        <option val="pause">pause</option>
-	        <option val="live">live</option>
-	    </select>
-	    <div id="acc">
-	        <label><input type="checkbox"> fast</label>
-	    </div>
-	    <div id="display"></div>
-	</div>
-	<div  id="map_canvas"></div>
-	<script type="text/javascript" src="/js/map.js"></script>
-	<script type="text/javascript" src="/js/front.js"></script>
+    <table>
+        <tr id="top">
+            <td>
+                <div id="controls">
+                    <select id="grid_select">
+                        <option val="0">choose a grid...</option>
+                    </select>
+                    <select id="play_select">
+                        <option val="pause">choose a route...</option>
+                    </select>
+                    <div id="options">
+                        <label id="acc"><input type="checkbox"> fast</label>
+                        <label id="repeat"><input type="checkbox"> repeat</label>
+                    </div>
+                </div>
+                <i id="menubutton" class="fa fa-bars"></i>
+                <div id="display">...</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div  id="map_canvas"></div>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="/js/map.js"></script>
+    <script type="text/javascript" src="/js/front.js"></script>
 </body>
 </html>

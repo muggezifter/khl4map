@@ -7,6 +7,7 @@
     var interval = 10;
     var playIntervalId;
     var speedfactor = 1000;
+    var repeat = false;
     var vol= 0.6;
     var khl4map = createMap();
 
@@ -37,6 +38,9 @@
                         $.getJSON("/play?callback=?").done(function (data) {
                             logInConsole && console.log(data);
                         });
+                        if (repeat) {
+                            startPlaying($("#play_select").val());
+                        }
                     }
 
                 }, 
@@ -94,14 +98,28 @@
                 logInConsole && console.log("live");
                 break;
             default:
+                break;
+        }
+    };
+
+    var startPlaying = function (id) {
+        switch (id) {
+            case "pause":
+                stopPlaying();
+                logInConsole && console.log("pause");
+                break;
+            case "live":
+                stopPlaying();
+                logInConsole && console.log("live");
+                break;
+            default:
                 $.getJSON("/recording/find?rec_id=" + id + "&callback=?").done(function (data) {
                     currentTrack = data;
                     play(currentTrack);
                 });
                 break;
         }
-    };
-
+    }
     var stopPlaying = function () {
         $.getJSON("/play?callback=?").done(function (data) {
             logInConsole && console.log(data);
@@ -151,7 +169,12 @@
 
     $("#acc input:checkbox").change(
         function (event) {
-            speedfactor = (speedfactor==200)?1000:200;
+            speedfactor = $("#acc input:checkbox").is(":checked")? 200:1000;
+        });
+
+    $("#repeat input:checkbox").change(
+        function (event) {
+            repeat = $("#repeat input:checkbox").is(":checked");
         });
 
     $("select#play_select").change(
@@ -163,6 +186,17 @@
         function (event) {
             gridsSelectChangeHandler(event.target.value)
         });
+
+    $("#menubutton").click(
+        function (event) {
+            $("#controls").toggleClass("open");
+            if ($("#controls").hasClass("open")) {
+                stopPlaying();
+            } else {
+                startPlaying($("#play_select").val());
+            }
+        }
+    );
 
     populateGridsSelect();
 })();
