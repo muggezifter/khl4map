@@ -40,7 +40,6 @@ fs.exists('../../public', (exists) => {
         copyFile('./dist/fonts/fontawesome-webfont.woff2','../../public/fonts/fontawesome-webfont.woff2');
         console.log('copied fonts/fontawesome-webfont.woff2');
 
-
         copyFile('./dist/js/jquery-2.2.0.min.js','../../public/js/jquery-2.2.0.min.js');
         console.log('copied js/jquery-2.2.0.min.js');
         copyFile('./dist/js/map.js','../../public/js/map.js');
